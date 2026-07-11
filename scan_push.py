@@ -9,7 +9,7 @@ import pandas as pd
 
 
 PUSHPLUS_TOKEN = os.environ[PUSHPLUS_TOKEN]
-BASE_URL = https://fapi.binance.com
+BASE_URL = "https://data-api.binance.vision"
 CTX = ssl.create_default_context()
 HDR = {User-Agent: Mozilla/5.0}
 N = 26; MULT = 2.0; ATR_P = 14; SKEL_THR = 0.8
@@ -37,4 +37,5 @@ def notify(title, content):
 
 
 def get_symbols():
-    info = http_get_json(f{BASE_URL}/fapi/v1/exchangeInfo)
+    info = http_get_json(f{BASE_URL}/api/v3/exchangeInfo)
+
