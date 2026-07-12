@@ -1,0 +1,33 @@
+name: Gate.io Skeleton K Scan
+
+on:
+  schedule:
+    - cron: '58 * * * *'   # UTC 每个整点58分执行
+  workflow_dispatch:       # 手动触发
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run Gate.io Scanner
+        env:
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+        run: python gateio_scan.py
+
+      - name: Upload scan result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: scan-result
+          path: scan_result.html
+          retention-days: 3
